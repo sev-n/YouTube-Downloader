@@ -1,10 +1,10 @@
 from tkinter import filedialog
-import customtkinter as ctk
+import customtkinter as ctk # waiting version 5.0.0
 import downloader
 import threading
 
-ctk.set_appearance_mode("light")
-ctk.set_default_color_theme("blue")
+ctk.set_appearance_mode("light") # default appearance mode
+#ctk.set_default_color_theme("blue") # default theme
 
 class App(ctk.CTk):
     def __init__(self) -> None:
@@ -13,14 +13,11 @@ class App(ctk.CTk):
         self.title("Youtube Downloader")
         self.resizable(0, 0)
         self.geometry("700x500")
-        #self.grid_columnconfigure(0, weight=1)
-        #self.grid_rowconfigure(0, weight=1)
         self.radio_variable: int = ctk.IntVar(value=0)
         self.switch_variable: str = ctk.IntVar(value=0)
         self.path: str = ""
 
-        
-        self.create_widgets()     
+        self.create_widgets() # create all widgets
         
     def create_frame(self):
         global frame1, frame2, frame3, frame4
@@ -35,6 +32,7 @@ class App(ctk.CTk):
         
         frame4 = ctk.CTkFrame(self, corner_radius=15, border_width=1)
         frame4.grid(row=3, column=0, padx=30, pady=(20, 0), sticky="nw")
+    
     def create_label(self):
         global yt_path_detail
         yt_label = ctk.CTkLabel(frame1, text="Paste YouTube link")
@@ -88,7 +86,7 @@ class App(ctk.CTk):
         
     def create_text_box(self):
         global textbox
-        textbox = ctk.CTkTextbox(frame4, width=350, state="disabled")
+        textbox = ctk.CTkTextbox(frame4, width=610, state="disabled")
         textbox.grid(row=0, column=0, rowspan=2, padx=20, pady=20, sticky="nsew")
         
     def download_button_event(self):
@@ -100,15 +98,17 @@ class App(ctk.CTk):
         
         dl = downloader.Downloader(url, self.path)
 
-        # !Alert: Runtime error occured.
-        thread = threading.Thread(target=dl.download_video)
-        thread.setDaemon(True)
-        thread.start()
+        if self.radio_variable.get() == 1:
+            # !Alert: Runtime error occured.
+            thread = threading.Thread(target=dl.download_video)
+            thread.start()
+        elif self.radio_variable.get() == 2:
+            thread = threading.Thread(target=dl.download_audio)
+            thread.start()
     
     def rbutton_event(self):
         if self.radio_variable.get() == 1 or self.radio_variable.get() == 2:
             if self.path:
-                print(f"Radio button clicked {self.radio_variable.get()}")
                 yt_button.configure(state="normal")
         
     def switch_event(self):
