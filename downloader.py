@@ -38,10 +38,7 @@ class Downloader:
         
         try:
             youtube = YouTube(self.url)
-            #count += 1
-     
         except exceptions.PytubeError as e:
-            app.btn_download_vid.config(state=NORMAL)
             print(e)
         else:
             #self.youtube.register_on_progress_callback(self.on_progress)
@@ -51,14 +48,11 @@ class Downloader:
             title: str = youtube.title
             text = f"   {title}"
             abs_path = f"{self.path}/{my_video.default_filename}"
-            app.download_list.insert(END, f"Checking... {youtube.title}")
             
             run = True
             
             if os.path.isfile(abs_path) and os.path.getsize(abs_path) == my_video.filesize:
-                    app.download_list.delete(END)
                     messagebox.showinfo(title="File Exist!", message="Already downloaded file")
-                    app.btn_download_vid.config(state=NORMAL)
                     run = False
             else:
                 with open(abs_path, "wb") as file:
@@ -74,14 +68,8 @@ class Downloader:
                             file.write(chunk)
                             downloaded_bytes += len(chunk)
                             # TODO: Find bug, not displaying text with multiple downloads
-                            update_text = f"    Downloading {downloaded_bytes} bytes / {round(file_size, 2)} mb -{text}"
-                            app.download_list.delete(END)
-                            app.download_list.insert(END, update_text)    
+                            update_text = f"    Downloading {downloaded_bytes} bytes / {round(file_size, 2)} mb -{text}"   
                         else:
-                            #time.sleep(2)
-                            app.download_list.delete(END)
-                            app.download_list.insert(END, f"    Downloaded - {round(downloaded_bytes * 0.000001, 2)} / {round(file_size, 2)} mb  -{text}")
-                            app.btn_download_vid.config(state=NORMAL)
                             break
             
     def download_audio(self) -> None:
