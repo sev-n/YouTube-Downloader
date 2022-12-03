@@ -138,4 +138,3 @@ class App(ctk.CTk):
     
     def run(self):
         self.mainloop()
-        
