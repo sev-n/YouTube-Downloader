@@ -1,5 +1,5 @@
 from tkinter import filedialog
-import customtkinter as ctk # waiting version 5.0.0
+import customtkinter as ctk
 import downloader
 import threading
 
@@ -14,7 +14,7 @@ class App(ctk.CTk):
         self.resizable(0, 0)
         self.geometry("700x500")
         self.radio_variable: int = ctk.IntVar(value=0)
-        self.switch_variable: str = ctk.IntVar(value=0)
+        self.switch_variable: int = ctk.IntVar(value=0)
         self.path: str = ""
 
         self.create_widgets() # create all widgets
@@ -86,7 +86,7 @@ class App(ctk.CTk):
         
     def create_text_box(self):
         global textbox
-        textbox = ctk.CTkTextbox(frame4, width=610, state="disabled")
+        textbox = ctk.CTkTextbox(frame4, width=610, cursor='arrow', wrap='word', state="disabled")
         textbox.grid(row=0, column=0, rowspan=2, padx=20, pady=20, sticky="nsew")
         
     def download_button_event(self):
@@ -100,11 +100,10 @@ class App(ctk.CTk):
 
         if self.radio_variable.get() == 1:
             # !Alert: Runtime error occured.
-            thread = threading.Thread(target=dl.download_video)
-            thread.start()
+            threading.Thread(target=dl.download_video).start()
+            
         elif self.radio_variable.get() == 2:
-            thread = threading.Thread(target=dl.download_audio)
-            thread.start()
+            threading.Thread(target=dl.download_audio).start()
     
     def rbutton_event(self):
         if self.radio_variable.get() == 1 or self.radio_variable.get() == 2:
