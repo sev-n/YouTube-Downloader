@@ -1,7 +1,9 @@
 from tkinter import filedialog
+from PIL import Image
 import customtkinter as ctk
 import downloader
 import threading
+import os
 
 ctk.set_appearance_mode("light") # default appearance mode
 #ctk.set_default_color_theme("blue") # default theme
@@ -54,8 +56,10 @@ class App(ctk.CTk):
                                   state="disabled",
                                   border_width=1,
                                   fg_color=None,
+                                  image=download_img,
+                                  compound="left",
                                   command=self.download_button_event)
-        yt_button.grid(row=0, column=2, padx=10, pady=10, ipady=5)
+        yt_button.grid(row=0, column=2, padx=10, pady=10, ipady=5, ipadx=5)
         
         yt_rbutton1 = ctk.CTkRadioButton(frame2, text="MP4", 
                                          variable=self.radio_variable, 
@@ -88,6 +92,15 @@ class App(ctk.CTk):
         global textbox
         textbox = ctk.CTkTextbox(frame4, width=610, cursor='arrow', wrap='word', state="disabled")
         textbox.grid(row=0, column=0, rowspan=2, padx=20, pady=20, sticky="nsew")
+        
+    def create_images(self):
+        global download_img
+        image_path = os.path.dirname(__file__)
+        relative_path = "../YouTube-Downloader/assets/"
+        abs_path = os.path.join(image_path, relative_path)
+        download_img = ctk.CTkImage(light_image=Image.open(os.path.join(abs_path, "dl-logo.png")),
+                                  dark_image=Image.open(os.path.join(abs_path, "dl-logo.png")),
+                                  size=(55, 20))
         
     def download_button_event(self):
         # https://www.youtube.com/watch?v=4OVCGNmsBwA
@@ -131,6 +144,7 @@ class App(ctk.CTk):
         self.create_frame()
         self.create_label()
         self.create_entry()
+        self.create_images()
         self.create_button()
         self.create_switch()
         self.create_text_box()
