@@ -6,7 +6,7 @@ import threading
 import os
 
 ctk.set_appearance_mode("light") # default appearance mode
-#ctk.set_default_color_theme("blue") # default theme
+ctk.set_default_color_theme("assets/themes/blue.json") # theme
 
 class App(ctk.CTk):
     def __init__(self) -> None:
@@ -56,6 +56,7 @@ class App(ctk.CTk):
                                   state="disabled",
                                   border_width=1,
                                   fg_color=None,
+                                  hover_color=None,
                                   image=download_img,
                                   compound="left",
                                   command=self.download_button_event)
