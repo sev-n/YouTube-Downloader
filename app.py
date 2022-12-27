@@ -1,5 +1,5 @@
-from tkinter import filedialog
-from PIL import Image
+from tkinter import PhotoImage, filedialog
+from PIL import Image, ImageTk
 import customtkinter as ctk
 import downloader
 import threading
@@ -15,6 +15,8 @@ class App(ctk.CTk):
         self.title("Youtube Downloader")
         self.resizable(0, 0)
         self.geometry("700x500")
+        self.icon_path = ImageTk.PhotoImage(file="assets/dl-logo.png")
+        self.iconphoto(False, self.icon_path)
         self.radio_variable: int = ctk.IntVar(value=0)
         self.switch_variable: int = ctk.IntVar(value=0)
         self.path: str = ""
@@ -101,7 +103,8 @@ class App(ctk.CTk):
         abs_path = os.path.join(image_path, relative_path)
         download_img = ctk.CTkImage(light_image=Image.open(os.path.join(abs_path, "dl-logo.png")),
                                   dark_image=Image.open(os.path.join(abs_path, "dl-logo.png")),
-                                  size=(55, 20))
+                                  size=(55, 22))
+        
         
     def download_button_event(self):
         # https://www.youtube.com/watch?v=4OVCGNmsBwA
