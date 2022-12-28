@@ -13,14 +13,12 @@ class App(ctk.CTk):
         super().__init__()
         
         self.title("Youtube Downloader")
-        self.resizable(0, 0)
+        self.resizable(False, False)
         self.geometry("700x500")
-        self.icon_path = ImageTk.PhotoImage(file="assets/dl-logo.png")
-        self.iconphoto(False, self.icon_path)
         self.radio_variable: int = ctk.IntVar(value=0)
         self.switch_variable: int = ctk.IntVar(value=0)
         self.path: str = ""
-
+        
         self.create_widgets() # create all widgets
         
     def create_frame(self):
@@ -59,8 +57,8 @@ class App(ctk.CTk):
                                   border_width=1,
                                   fg_color=None,
                                   hover_color=None,
-                                  image=download_img,
-                                  compound="left",
+                                #   image=download_img,
+                                #   compound="left",
                                   command=self.download_button_event)
         yt_button.grid(row=0, column=2, padx=10, pady=10, ipady=5, ipadx=5)
         
@@ -96,14 +94,15 @@ class App(ctk.CTk):
         textbox = ctk.CTkTextbox(frame4, width=610, cursor='arrow', wrap='word', state="disabled")
         textbox.grid(row=0, column=0, rowspan=2, padx=20, pady=20, sticky="nsew")
         
-    def create_images(self):
-        global download_img
-        image_path = os.path.dirname(__file__)
-        relative_path = "../YouTube-Downloader/assets/"
-        abs_path = os.path.join(image_path, relative_path)
-        download_img = ctk.CTkImage(light_image=Image.open(os.path.join(abs_path, "dl-logo.png")),
-                                  dark_image=Image.open(os.path.join(abs_path, "dl-logo.png")),
-                                  size=(55, 22))
+    # def create_images(self):
+    #     global download_img
+    #     image_path = os.path.dirname(__file__)
+    #     relative_path = "../YouTube-Downloader/assets/"
+    #     abs_path = os.path.join(image_path, relative_path)
+        
+    #     download_img = ctk.CTkImage(light_image=Image.open(os.path.join(abs_path, "dl-logo.png")),
+    #                               dark_image=Image.open(os.path.join(abs_path, "dl-logo.png")),
+    #                               size=(55, 22))
         
         
     def download_button_event(self):
@@ -148,7 +147,7 @@ class App(ctk.CTk):
         self.create_frame()
         self.create_label()
         self.create_entry()
-        self.create_images()
+        #self.create_images()
         self.create_button()
         self.create_switch()
         self.create_text_box()
